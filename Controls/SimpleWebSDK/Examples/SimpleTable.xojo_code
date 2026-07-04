@@ -116,7 +116,7 @@ Inherits SimpleWebSDKUIControl
 		        
 		        actionColumn.AddChild(btn)
 		        
-		        actionColumn.AddText("&nbsp;")
+		        actionColumn.AddText("&nbsp;", True)
 		      Next
 		      
 		      Dim checkbox As New DOM.CheckboxElement("Check Me!")

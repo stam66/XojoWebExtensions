@@ -2,18 +2,31 @@
 Protected Class TextElement
 Implements Element
 	#tag Method, Flags = &h0
-		Sub Constructor(value as string)
-		  
+		Sub Constructor(value as string, isRaw as Boolean = False)
+
 		  self.Text = value
+		  self.Raw = isRaw
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function ToString(delimiter as string = "") As String
-		  Return Text
+		  If Raw Then
+		    Return Text
+		  End If
+
+		  Return DOM.EscapeHTML(Text)
 		End Function
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h0
+		#tag Note
+			When True, Text is emitted as-is so intentional HTML entities or markup survive.
+			When False (the default), Text is HTML-escaped.
+		#tag EndNote
+		Raw As Boolean = False
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		Text As String
