@@ -37,7 +37,7 @@ Inherits WebSDKUIControl
 
 	#tag Event
 		Function HandleRequest(request As WebRequest, response As WebResponse) As Boolean
-		  break
+
 		End Function
 	#tag EndEvent
 
@@ -158,12 +158,15 @@ Inherits WebSDKUIControl
 		      End If
 		    End If
 		  Next
+
+		  Self.UpdateControl
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub RemoveAll()
 		  mKeys.ResizeTo(-1)
+		  Self.UpdateControl
 		End Sub
 	#tag EndMethod
 

@@ -1,6 +1,18 @@
 #tag Module
 Protected Module DOM
 	#tag Method, Flags = &h1
+		Protected Function EscapeAttribute(value as string) As String
+		  Return EscapeHTML(value).ReplaceAll("""", "&quot;")
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function EscapeHTML(value as string) As String
+		  Return value.ReplaceAll("&", "&amp;").ReplaceAll("<", "&lt;").ReplaceAll(">", "&gt;")
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function IndicatorToString(indicator as WebUIControl.Indicators, prefix as string) As String
 		  Select Case indicator
 		  Case WebUIControl.Indicators.Danger

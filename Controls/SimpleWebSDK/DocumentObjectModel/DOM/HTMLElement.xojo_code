@@ -36,8 +36,8 @@ Implements Element
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub AddText(text as string)
-		  mChildren.add new TextElement(text)
+		Sub AddText(text as string, isRaw as Boolean = False)
+		  mChildren.add new TextElement(text, isRaw)
 		End Sub
 	#tag EndMethod
 
@@ -209,13 +209,13 @@ Implements Element
 		  
 		  // set its classes
 		  If mClasses.Count > 0 Then
-		    parts.Add "class=""" + Join(mClasses, " ") + """"
+		    parts.Add "class=""" + DOM.EscapeAttribute(Join(mClasses, " ")) + """"
 		  End If
-		  
+
 		  If mStyle.KeyCount > 0 Then
-		    parts.Add "style=""" + GetAttribute("style") + ";"""
+		    parts.Add "style=""" + DOM.EscapeAttribute(GetAttribute("style")) + ";"""
 		  End If
-		  
+
 		  // apply any other attributes
 		  Dim attributeKeys() As Variant = mAttributes.keys()
 		  For i As Integer = 0 To attributeKeys.LastIndex
@@ -224,7 +224,7 @@ Implements Element
 		    If value = "" Then
 		      parts.Add key
 		    Else
-		      parts.Add key + "=""" + value + """"
+		      parts.Add key + "=""" + DOM.EscapeAttribute(value) + """"
 		    End If
 		  Next
 		  
@@ -242,9 +242,9 @@ Implements Element
 		    html.Add mChildren(i).ToString
 		  Next
 		  
-		  // only add end tags for things that need it
-		  Dim exemptEndTags() As String = Array("img")
-		  If exemptEndTags.IndexOf(tag) = -1 Then
+		  // only add end tags for things that need it (HTML void elements)
+		  Dim exemptEndTags() As String = Array("area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr")
+		  If exemptEndTags.IndexOf(tag.Lowercase) = -1 Then
 		    html.Add "</" + tag + ">"
 		  End If
 		  

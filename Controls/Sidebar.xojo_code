@@ -16,6 +16,9 @@ Inherits WebSDKUIControl
 		  Case "itemclicked"
 		    Dim row As Integer = parameters.Lookup("index", -1)
 		    If row > -1 Then
+		      // keep the server-side selection in sync with what the browser
+		      // already shows, so the next UpdateControl doesn't revert it
+		      mSelectedIndex = row
 		      RaiseEvent RowClicked(row)
 		    End If
 		    
